@@ -51,14 +51,12 @@ public final class AudioHelper {
     var propertyAddress = AudioObjectPropertyAddress(mSelector: direction == .input ? kAudioHardwarePropertyDefaultInputDevice : kAudioHardwarePropertyDefaultOutputDevice,
                                                      mScope: kAudioObjectPropertyScopeGlobal,
                                                      mElement: kAudioObjectPropertyElementMaster)
-    
     // set the default device
     let error = AudioObjectSetPropertyData(AudioObjectID(kAudioObjectSystemObject),
                                            &propertyAddress,
                                            0,
                                            nil,
                                            UInt32(MemoryLayout<DeviceID>.size), &deviceID)
-    
     return error == noErr
   }
 
@@ -83,7 +81,6 @@ public final class AudioHelper {
                                       nil,
                                       &size,
                                       &deviceID ) == noErr else { fatalError() }
-    
     return deviceID
   }
   /// Find all AudioDevices
@@ -155,7 +152,6 @@ public final class AudioHelper {
                                          0,
                                          nil,
                                          &size) == noErr else { fatalError() }
-    
     // should be non-zero
     return (Int(size) / MemoryLayout<AudioStreamID>.size) != 0
   }
