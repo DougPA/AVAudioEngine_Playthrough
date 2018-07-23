@@ -20,12 +20,6 @@ public typealias DeviceID = UInt32
 public final class AudioHelper {
   
   // ----------------------------------------------------------------------------
-  // MARK: - Public Static properties
-  
-  public static let kInput = true
-  public static let kOutput = false
-  
-  // ----------------------------------------------------------------------------
   // MARK: - Public properties
   
   public enum Direction: String {
