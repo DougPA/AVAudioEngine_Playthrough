@@ -26,9 +26,12 @@ public final class AudioHelper {
   }
   
   public static var inputDevices            : [AudioDevice] { return getDeviceList(for: .input) }
-  public static var outputDevices           : [AudioDevice] { return getDeviceList(for: .output) }
   public static var defaultInputDevice      : AudioDeviceID { return getDefaultDevice(for: .input) }
+  public static var inputDeviceNames        : [String] { return inputDevices.map  { $0.name! } }
+  
+  public static var outputDevices           : [AudioDevice] { return getDeviceList(for: .output) }
   public static var defaultOutputDevice     : AudioDeviceID { return getDefaultDevice(for: .output) }
+  public static var outputDeviceNames       : [String] { return outputDevices.map  { $0.name! } }
 
   // ----------------------------------------------------------------------------
   // MARK: - Public class methods

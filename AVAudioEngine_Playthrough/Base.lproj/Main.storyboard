@@ -741,7 +741,7 @@
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="whI-Th-8c3">
                                 <rect key="frame" x="389" y="194" width="77" height="32"/>
-                                <buttonCell key="cell" type="push" title="Pause" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ao4-xe-P90">
+                                <buttonCell key="cell" type="push" title="Pause" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ao4-xe-P90">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -751,7 +751,7 @@
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eNL-GF-pMh">
                                 <rect key="frame" x="389" y="135" width="77" height="32"/>
-                                <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNo-j1-fhq">
+                                <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNo-j1-fhq">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -851,6 +851,9 @@
                     <connections>
                         <outlet property="inputPopup" destination="d71-Vw-nQA" id="8l3-bf-jnn"/>
                         <outlet property="outputPopup" destination="HIL-Hl-p1N" id="2qU-4V-ptb"/>
+                        <outlet property="pauseButton" destination="whI-Th-8c3" id="WZg-9d-poq"/>
+                        <outlet property="startButton" destination="pQS-mG-L9u" id="17B-p5-ykv"/>
+                        <outlet property="stopButton" destination="eNL-GF-pMh" id="MxY-Vq-N6j"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

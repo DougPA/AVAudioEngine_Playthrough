@@ -14,15 +14,18 @@ class ViewController                        : NSViewController {
   // ------------------------------------------------------------------------------
   // MARK: - Public properties
   
-  @objc dynamic var inputs                  : [String] { return inputDevices.map  { $0.name! } }
-  @objc dynamic var outputs                 : [String] { return outputDevices.map { $0.name! } }
+  @objc dynamic var inputs                  : [String] { return AudioHelper.inputDeviceNames}
+  @objc dynamic var outputs                 : [String] { return AudioHelper.outputDeviceNames }
 
-  var inputDevices = AudioHelper.inputDevices
-  var outputDevices = AudioHelper.outputDevices
+  var inputDevices                          = AudioHelper.inputDevices
+  var outputDevices                         = AudioHelper.outputDevices
 
   // ------------------------------------------------------------------------------
   // MARK: - Private properties
   
+  @IBOutlet private weak var startButton    : NSButton!
+  @IBOutlet private weak var pauseButton    : NSButton!
+  @IBOutlet private weak var stopButton     : NSButton!
   @IBOutlet private weak var inputPopup     : NSPopUpButton!
   @IBOutlet private weak var outputPopup    : NSPopUpButton!
   
@@ -32,6 +35,8 @@ class ViewController                        : NSViewController {
   // MARK: - Action methods
   
   @IBAction func play(_ sender: NSButton) {
+    
+    toggleButtons(false)
     
     // get the selected input & output devices
     let inputDeviceIndex = inputPopup.indexOfSelectedItem
@@ -53,18 +58,21 @@ class ViewController                        : NSViewController {
     }
     catch {
       print("Failed to start AVAudioEngine")
+      toggleButtons(true)
     }
   }
 
   @IBAction func pause(_ sender: NSButton) {
   
     engine?.pause()
+    toggleButtons(true)
   }
   
   @IBAction func stop(_ sender: NSButton) {
   
     engine?.stop()
     engine = nil
+    toggleButtons(true)
   }
   
   @IBAction func volume(_ sender: NSSlider) {
@@ -75,6 +83,22 @@ class ViewController                        : NSViewController {
   @IBAction func pan(_ sender: NSSlider) {
   
     engine?.inputNode.pan = sender.floatValue
+  }
+
+  // ------------------------------------------------------------------------------
+  // MARK: - Private methods
+  
+  /// Change the state of the buttons
+  ///
+  /// - Parameter value:          state of the Start button
+  ///
+  private func toggleButtons(_ value: Bool) {
+    
+    startButton.isEnabled = value
+    pauseButton.isEnabled = !value
+    stopButton.isEnabled = !value
+    inputPopup.isEnabled = value
+    outputPopup.isEnabled = value
   }
 }
 
