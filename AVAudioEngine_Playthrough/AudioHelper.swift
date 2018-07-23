@@ -8,8 +8,6 @@
 
 import Foundation
 import CoreAudio
-import AudioUnit
-import AudioToolbox
 
 // ------------------------------------------------------------------------------
 // MARK: - AudioHelper Class implementation
