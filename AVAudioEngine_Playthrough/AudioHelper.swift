@@ -33,20 +33,41 @@ public final class AudioHelper {
     case output = "Output"
   }
   
-  public static var defaultInputDevice      : AudioDeviceID { return getDefaultDevice(for: .input) }
-  public static var defaultOutputDevice     : AudioDeviceID { return getDefaultDevice(for: .output) }
   public static var inputDevices            : [AudioDevice] { return getDeviceList(for: .input) }
   public static var outputDevices           : [AudioDevice] { return getDeviceList(for: .output) }
+  public static var defaultInputDevice      : AudioDeviceID { return getDefaultDevice(for: .input) }
+  public static var defaultOutputDevice     : AudioDeviceID { return getDefaultDevice(for: .output) }
+
+  // ----------------------------------------------------------------------------
+  // MARK: - Public class methods
   
-  public final class func audioDeviceId(for audioUnit: AudioUnit) -> AudioDeviceID? {
+  /// Set the default device
+  ///
+  /// - Parameters:
+  ///   - id:                 the DeviceID
+  ///   - direction:          input / output
+  /// - Returns:              success / failure
+  ///
+  public class func setDefaultDevice(_ id: DeviceID, _ direction: Direction) -> Bool {
     
-    var dataSize = UInt32(MemoryLayout<AudioDeviceID>.size)
-    var deviceID = AudioDeviceID()
-    AudioUnitGetProperty(audioUnit, kAudioOutputUnitProperty_CurrentDevice,
-                         kAudioUnitScope_Global, 0, &deviceID, &dataSize)
+    // make sure the ID is for an input device
+    guard isDirection(of: id, direction) else { return false }
     
-    return deviceID
+    var deviceID = id
+    var propertyAddress = AudioObjectPropertyAddress(mSelector: direction == .input ? kAudioHardwarePropertyDefaultInputDevice : kAudioHardwarePropertyDefaultOutputDevice,
+                                                     mScope: kAudioObjectPropertyScopeGlobal,
+                                                     mElement: kAudioObjectPropertyElementMaster)
+    
+    // set the default device
+    let error = AudioObjectSetPropertyData(AudioObjectID(kAudioObjectSystemObject),
+                                           &propertyAddress,
+                                           0,
+                                           nil,
+                                           UInt32(MemoryLayout<DeviceID>.size), &deviceID)
+    
+    return error == noErr
   }
+
   // ----------------------------------------------------------------------------
   // MARK: - Private class methods
   
@@ -62,14 +83,19 @@ public final class AudioHelper {
                                               mScope: kAudioObjectPropertyScopeGlobal,
                                               mElement: kAudioObjectPropertyElementMaster)
     // get the default device
-    guard AudioObjectGetPropertyData( AudioObjectID(kAudioObjectSystemObject), &property, 0, nil, &size, &deviceID ) == noErr else { fatalError() }
+    guard AudioObjectGetPropertyData( AudioObjectID(kAudioObjectSystemObject),
+                                      &property,
+                                      0,
+                                      nil,
+                                      &size,
+                                      &deviceID ) == noErr else { fatalError() }
     
     return deviceID
   }
-  /// Find all SimpleAudioDevices
+  /// Find all AudioDevices
   ///
   /// - Parameter direction:    Input / Output
-  /// - Returns:                an array of SimpleAudioDevice
+  /// - Returns:                an array of AudioDevice
   ///
   private final class func getDeviceList(for direction: Direction) -> [AudioDevice] {
     
@@ -81,21 +107,31 @@ public final class AudioHelper {
     var numberOfDevices = 0
     
     // find the number of devices
-    guard AudioObjectGetPropertyDataSize( AudioObjectID(kAudioObjectSystemObject), &property, 0, nil, &size ) == noErr else { fatalError() }
+    guard AudioObjectGetPropertyDataSize( AudioObjectID(kAudioObjectSystemObject),
+                                          &property,
+                                          0,
+                                          nil,
+                                          &size ) == noErr else { fatalError() }
+    
     numberOfDevices = Int(size) / MemoryLayout<AudioDeviceID>.size
     
     // get the device ids
     let deviceIDs = UnsafeMutablePointer<UInt32>.allocate(capacity: numberOfDevices)
-    guard AudioObjectGetPropertyData( AudioObjectID(kAudioObjectSystemObject), &property, 0, nil, &size, deviceIDs ) == noErr else { fatalError() }
+    guard AudioObjectGetPropertyData( AudioObjectID(kAudioObjectSystemObject),
+                                      &property,
+                                      0,
+                                      nil,
+                                      &size,
+                                      deviceIDs ) == noErr else { fatalError() }
     numberOfDevices = Int(size) / MemoryLayout<AudioDeviceID>.size
     
     // iterate through the found devices
     for i in 0..<numberOfDevices {
       
       // is the device in the desired direction?
-      if checkDirection(of: deviceIDs.advanced(by: i).pointee, for: direction) {
+      if isDirection(of: deviceIDs.advanced(by: i).pointee, direction) {
         
-        // YES, initialize a SimpleAudioDevice
+        // YES, initialize an AudioDevice
         if let device = AudioDevice( id: deviceIDs.advanced(by: i ).pointee, direction: direction ) {
           
           // add it to the array
@@ -105,14 +141,14 @@ public final class AudioHelper {
     }
     return deviceArray
   }
-  /// Find the direction (Input/Output) of a Device
+  /// Verify the direction (Input/Output) of a Device
   ///
   /// - Parameters:
   ///   - id:                 a Device ID
   ///   - direction:          the desired direction
-  /// - Returns:              succecc / failure
+  /// - Returns:              success / failure
   ///
-  private class func checkDirection(of id: DeviceID, for direction: Direction) -> Bool {
+  private class func isDirection(of deviceID: DeviceID, _ direction: Direction) -> Bool {
     var size : UInt32 = 0
     
     // setup for the specified direction
@@ -120,7 +156,11 @@ public final class AudioHelper {
                                                      mScope: direction == .input ? kAudioDevicePropertyScopeInput : kAudioDevicePropertyScopeOutput,
                                                      mElement: 0)
     // get the number of devices with the specified id & direction
-    guard AudioObjectGetPropertyDataSize(id, &propertyAddress, 0, nil, &size) == noErr else { fatalError() }
+    guard AudioObjectGetPropertyDataSize(deviceID,
+                                         &propertyAddress,
+                                         0,
+                                         nil,
+                                         &size) == noErr else { fatalError() }
     
     // should be non-zero
     return (Int(size) / MemoryLayout<AudioStreamID>.size) != 0
@@ -132,11 +172,6 @@ public final class AudioHelper {
 // ------------------------------------------------------------------------------
 
 public struct AudioDevice {
-  
-  // ----------------------------------------------------------------------------
-  // MARK: - Static properties
-  
-  static let kNoError                       = 0
   
   // ----------------------------------------------------------------------------
   // MARK: - Public properties
@@ -151,7 +186,7 @@ public struct AudioDevice {
   // MARK: - Initialization
   
   init?(id: AudioDeviceID, direction: AudioHelper.Direction) {
-    var string: CFString = "" as CFString
+    var string = "" as CFString
     var size = UInt32(MemoryLayout<CFString>.size)
     var nameProperty = AudioObjectPropertyAddress(mSelector: kAudioObjectPropertyName,
                                                   mScope: kAudioObjectPropertyScopeGlobal,
@@ -168,11 +203,21 @@ public struct AudioDevice {
       format = physicalFormat
       
       // get the device name
-      guard AudioObjectGetPropertyData( id, &nameProperty, 0, nil, &size, &string ) == AudioDevice.kNoError else { return nil }
+      guard AudioObjectGetPropertyData( id,
+                                        &nameProperty,
+                                        0,
+                                        nil,
+                                        &size,
+                                        &string ) == noErr else { return nil }
       name = string as String
       
       // get the device uniqueID
-      guard AudioObjectGetPropertyData( id, &uniqueIDProperty, 0, nil, &size, &string ) == AudioDevice.kNoError else { return nil }
+      guard AudioObjectGetPropertyData( id,
+                                        &uniqueIDProperty,
+                                        0,
+                                        nil,
+                                        &size,
+                                        &string ) == noErr else { return nil }
       uniqueID = string as String
     }
   }
@@ -206,14 +251,15 @@ public struct AudioDevice {
     var asbd = AudioStreamBasicDescription()
     var size = UInt32(MemoryLayout<AudioStreamBasicDescription>.size)
     var formatProperty = AudioObjectPropertyAddress(mSelector: kAudioStreamPropertyPhysicalFormat,
-                                                    mScope: kAudioDevicePropertyScopeOutput,
+                                                    mScope: direction == .input ? kAudioDevicePropertyScopeInput : kAudioDevicePropertyScopeOutput,
                                                     mElement: kAudioObjectPropertyElementMaster)
-    // adjust the scope as needed
-    if direction == .input { formatProperty.mScope = kAudioDevicePropertyScopeInput }
-    
     // get the AudioStreamBasicDescription
-    guard AudioObjectGetPropertyData( deviceID, &formatProperty, 0, nil, &size, &asbd ) == noErr else { fatalError() }
-    
+    guard AudioObjectGetPropertyData( deviceID,
+                                      &formatProperty,
+                                      0,
+                                      nil,
+                                      &size,
+                                      &asbd ) == noErr else { fatalError() }
     return asbd
   }
 }

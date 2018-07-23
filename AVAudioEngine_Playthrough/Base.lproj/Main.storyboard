@@ -706,25 +706,25 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="AVAudioEngine_Playthrough" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="151"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hdj-ht-XGT">
-                                <rect key="frame" x="136" y="92" width="208" height="19"/>
+                                <rect key="frame" x="136" y="211" width="208" height="19"/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="i8Z-2J-fUe"/>
                                 <connections>
                                     <action selector="volume:" target="XfG-lQ-9wD" id="OzO-TE-B1p"/>
                                 </connections>
                             </slider>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WHX-JI-fVe">
-                                <rect key="frame" x="136" y="25" width="208" height="24"/>
+                                <rect key="frame" x="136" y="144" width="208" height="24"/>
                                 <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="km2-OC-bHE"/>
                                 <connections>
                                     <action selector="pan:" target="XfG-lQ-9wD" id="gwH-7i-5Gn"/>
                                 </connections>
                             </slider>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aL8-S3-EUa">
-                                <rect key="frame" x="55" y="94" width="49" height="17"/>
+                                <rect key="frame" x="55" y="213" width="49" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Volume" id="2Gl-pl-248">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -732,7 +732,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nay-ix-Q3u">
-                                <rect key="frame" x="55" y="27" width="27" height="17"/>
+                                <rect key="frame" x="55" y="146" width="27" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Pan" id="AHM-PI-lQg">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -740,7 +740,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="whI-Th-8c3">
-                                <rect key="frame" x="389" y="75" width="77" height="32"/>
+                                <rect key="frame" x="389" y="194" width="77" height="32"/>
                                 <buttonCell key="cell" type="push" title="Pause" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ao4-xe-P90">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -750,7 +750,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eNL-GF-pMh">
-                                <rect key="frame" x="389" y="16" width="77" height="32"/>
+                                <rect key="frame" x="389" y="135" width="77" height="32"/>
                                 <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aNo-j1-fhq">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -760,7 +760,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pQS-mG-L9u">
-                                <rect key="frame" x="389" y="108" width="77" height="32"/>
+                                <rect key="frame" x="389" y="227" width="77" height="32"/>
                                 <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mhf-4a-1A5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -769,6 +769,60 @@
                                     <action selector="play:" target="XfG-lQ-9wD" id="1qH-zA-KXm"/>
                                 </connections>
                             </button>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d71-Vw-nQA" userLabel="Inputs">
+                                <rect key="frame" x="136" y="78" width="209" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="XAN-zx-clL" id="SKa-3m-ktU">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="her-HI-Qz9">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="XAN-zx-clL"/>
+                                            <menuItem title="Item 2" id="AtP-tZ-Sey"/>
+                                            <menuItem title="Item 3" id="AH6-5n-ysG"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="XfG-lQ-9wD" name="content" keyPath="inputs" id="P6E-qk-DKD"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N83-74-vPq">
+                                <rect key="frame" x="55" y="84" width="35" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Input" id="SvP-KV-mYo">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HIL-Hl-p1N" userLabel="Outputs">
+                                <rect key="frame" x="136" y="23" width="209" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hhM-Gu-KHL" id="a3y-eR-faK">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="knG-BI-td8">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="hhM-Gu-KHL"/>
+                                            <menuItem title="Item 2" id="WWY-zt-fgC"/>
+                                            <menuItem title="Item 3" id="PpY-lc-yhl"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="XfG-lQ-9wD" name="content" keyPath="outputs" id="pIS-C7-PpL"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1I-Jd-geF">
+                                <rect key="frame" x="55" y="29" width="47" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Output" id="vwb-Om-1Dr">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="WHX-JI-fVe" firstAttribute="top" secondItem="Hdj-ht-XGT" secondAttribute="bottom" constant="45" id="0Lp-3R-Yqr"/>
@@ -794,10 +848,14 @@
                             <constraint firstItem="Nay-ix-Q3u" firstAttribute="baseline" secondItem="WHX-JI-fVe" secondAttribute="baseline" id="xC9-8S-4t8"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="inputPopup" destination="d71-Vw-nQA" id="8l3-bf-jnn"/>
+                        <outlet property="outputPopup" destination="HIL-Hl-p1N" id="2qU-4V-ptb"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="595.5"/>
+            <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
 </document>
