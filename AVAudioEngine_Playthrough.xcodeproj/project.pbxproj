@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91482CFB21067D6600BF4D3B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 91482CFA21067D6600BF4D3B /* README.md */; };
 		914BF1B12103DCDF00F3B2A2 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914BF1B02103DCDF00F3B2A2 /* AudioHelper.swift */; };
 		91BA8082210396DA008FC917 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BA8081210396DA008FC917 /* AppDelegate.swift */; };
 		91BA8084210396DA008FC917 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BA8083210396DA008FC917 /* ViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		91482CFA21067D6600BF4D3B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		914BF1B02103DCDF00F3B2A2 /* AudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 		91BA807E210396DA008FC917 /* AVAudioEngine_Playthrough.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVAudioEngine_Playthrough.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BA8081210396DA008FC917 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 		91BA8075210396DA008FC917 = {
 			isa = PBXGroup;
 			children = (
+				91482CFA21067D6600BF4D3B /* README.md */,
 				91BA8080210396DA008FC917 /* AVAudioEngine_Playthrough */,
 				91BA807F210396DA008FC917 /* Products */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91482CFB21067D6600BF4D3B /* README.md in Resources */,
 				91BA8086210396DB008FC917 /* Assets.xcassets in Resources */,
 				91BA8089210396DB008FC917 /* Main.storyboard in Resources */,
 			);
